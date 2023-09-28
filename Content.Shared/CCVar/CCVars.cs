@@ -127,6 +127,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// CVar switch for species role whitelist. Used for controlling species on role.
+        /// </summary>
+        public static readonly CVarDef<bool> SpeciesWhiteListEnabled =
+            CVarDef.Create("game.specieswhitelistenabled", true, CVar.ARCHIVE);
+
+        /// <summary>
         ///     Disables most functionality in the GameTicker.
         /// </summary>
         public static readonly CVarDef<bool>

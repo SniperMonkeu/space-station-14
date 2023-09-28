@@ -37,3 +37,4 @@ latejoin-arrival-announcement = {$character} ({$job}) has arrived at the station
 latejoin-arrival-sender = Station
 latejoin-arrivals-direction = A shuttle transferring you to your station will arrive shortly.
 latejoin-arrivals-direction-time = A shuttle transferring you to your station will arrive in {$time}.
+player-species-warning = you have tried to join the round, on restricted species. You have been redirected to other specie. Accepted species on this role:

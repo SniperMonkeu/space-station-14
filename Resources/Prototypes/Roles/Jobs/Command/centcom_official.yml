@@ -10,6 +10,9 @@
   canBeAntag: false
   accessGroups:
   - AllAccess
+  speciesWhiteListed: 
+  - Human
+  - Dwarf
 
 - type: startingGear
   id: CentcomGear

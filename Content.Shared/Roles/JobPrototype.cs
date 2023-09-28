@@ -1,4 +1,5 @@
 using Content.Shared.Access;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,12 @@ namespace Content.Shared.Roles
 
         [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string PlayTimeTracker { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Whitelist for species prototypes. Needed for filter of character species on role.
+        /// </summary>
+        [DataField("speciesWhiteListed", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
+        public IReadOnlyCollection<string> SpeciesWhiteListed { get; private set; } = Array.Empty<string>();
 
         [DataField("supervisors")]
         public string Supervisors { get; private set; } = "nobody";

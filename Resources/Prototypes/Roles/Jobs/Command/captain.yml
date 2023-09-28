@@ -16,6 +16,9 @@
     - !type:DepartmentTimeRequirement
       department: Command
       time: 54000 # 15 hours
+  speciesWhiteListed: 
+  - Human
+  - Dwarf
   weight: 20
   startingGear: CaptainGear
   icon: "JobIconCaptain"

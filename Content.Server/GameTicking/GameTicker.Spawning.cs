@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Managers;
+using Content.Server.Construction.Completions;
 using Content.Server.Ghost;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -19,6 +20,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Server.GameTicking
 {
@@ -177,6 +179,40 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
+
+            if (_cfg.GetCVar(CCVars.SpeciesWhiteListEnabled)
+                && jobPrototype.SpeciesWhiteListed != Array.Empty<string>())
+            {
+                if (!jobPrototype.SpeciesWhiteListed.Contains(character.Species))
+                {
+                    var charactersGet = GetPlayerProfiles(player);
+                    var passedCharacters = new List<HumanoidCharacterProfile>();
+                    foreach (var characters in charactersGet)
+                    {
+                       if (!jobPrototype.SpeciesWhiteListed.Contains(characters.Species))
+                           continue;
+
+                       passedCharacters.Add(characters);
+                    }
+
+                    if (passedCharacters.Count == 0)
+                    {
+                        character = HumanoidCharacterProfile.RandomWithSpecies(_robustRandom.Pick(jobPrototype.SpeciesWhiteListed));
+                    }
+                    else
+                    {
+                        character = _robustRandom.Pick(passedCharacters);
+                    }
+
+                    _chatManager.DispatchServerMessage(player, Loc.GetString("player-species-warning"));
+                    foreach (var species in jobPrototype.SpeciesWhiteListed)
+                    {
+                        _chatManager.DispatchServerMessage(player, species);
+                    }
+                }
+            }
+
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
@@ -186,7 +222,6 @@ namespace Content.Server.GameTicking
             var newMind = _mind.CreateMind(data!.UserId, character.Name);
             _mind.SetUserId(newMind, data.UserId);
 
-            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new JobComponent { PrototypeId = jobId };
             _roles.MindAddRole(newMind, job, silent: silent);
             var jobName = _jobs.MindTryGetJobName(newMind);
