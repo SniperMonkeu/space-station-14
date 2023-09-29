@@ -20,7 +20,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Server.GameTicking
 {

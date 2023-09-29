@@ -24,7 +24,7 @@ namespace Content.Shared.Roles
         /// <summary>
         /// Whitelist for species prototypes. Needed for filter of character species on role.
         /// </summary>
-        [DataField("speciesWhiteListed", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
+        [DataField("speciesWhiteListed", customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
         public IReadOnlyCollection<string> SpeciesWhiteListed { get; private set; } = Array.Empty<string>();
 
         [DataField("supervisors")]
